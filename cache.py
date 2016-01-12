@@ -51,6 +51,7 @@ class Cache(object):
         self.cache_dict = new_cache_dict
 
     def __getitem__(self, item):
+        self.housekeep()
         return self.cache_dict.get(item, (None, None))[0]
 
     def __setitem__(self, key, value):
@@ -80,4 +81,4 @@ class Test(unittest.TestCase):
         cache = Cache(1)
         cache['hello'] = 'world'
         time.sleep(2)
-        self.assertEquals('world', cache['hello'])
+        self.assertEquals(None, cache['hello'])
