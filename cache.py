@@ -18,14 +18,15 @@ class Cache(object):
         self.cache_dict = {}
         self.expiration_time = datetime.timedelta(seconds=expiration_time)
 
-    def get(self, key):
+    def get(self, key, default=None):
         """
         Get the value corresponding to the key.
         :param key: the key
+        :param default: the default value to return if the key does not exist, None by default.
         :return: The correponding value, None, if it is not in the cache or it has expired.
         """
         self.housekeep()
-        return self.cache_dict.get(key, (None, None))[0]
+        return self.cache_dict.get(key, (default, None))[0]
 
     def set(self, key, value):
         """
@@ -69,7 +70,7 @@ class Test(unittest.TestCase):
         cache = Cache(1)
         cache.set('hello', 'world')
         time.sleep(2)
-        self.assertIsNone(cache.get('hello'))
+        self.assertEquals('not present', cache.get('hello', default='not present'))
 
     def test_get_set_item(self):
         cache = Cache(60)
