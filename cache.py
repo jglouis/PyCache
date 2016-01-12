@@ -6,12 +6,11 @@ __author__ = 'jglouis'
 
 
 class Cache(object):
-    """
-    A Simple single threaded cache system with time expiration mechanism.
-    """
+    """A Simple single threaded cache system with time expiration mechanism."""
     def __init__(self, expiration_time):
         """
         Initialize a Cache with a customizable expiration time for the key-value pairs.
+
         :param expiration_time: expiration time in seconds
         :return: a Cache object
         """
@@ -21,6 +20,7 @@ class Cache(object):
     def get(self, key, default=None):
         """
         Get the value corresponding to the key.
+
         :param key: the key
         :param default: the default value to return if the key does not exist, None by default.
         :return: The correponding value, None, if it is not in the cache or it has expired.
@@ -31,6 +31,7 @@ class Cache(object):
     def set(self, key, value):
         """
         Set a key-value pair in the cache.
+
         :param key: the key
         :param value: the value
         """
@@ -40,9 +41,7 @@ class Cache(object):
         self.cache_dict[key] = (value, datetime.datetime.now())
 
     def housekeep(self):
-        """
-        Delete expired key-value pairs.
-        """
+        """Delete expired key-value pairs."""
         # Check if keys have expired
         new_cache_dict = {}
         for key, value in self.cache_dict.iteritems():
